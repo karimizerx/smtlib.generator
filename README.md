@@ -1,9 +1,8 @@
-           Mini-projet 2 : Synthèse d'invariants en SMT-LIB
+# Mini-projet 2 : Synthèse d'invariants en SMT-LIB
 
 Cours de Logique, L3 Informatique, Université de Paris, 2023–2024
 
-Objectif du mini-projet
------------------------
+## Objectif du mini-projet
 
 Dans ce projet, vous allez automatiser la synthèse d'invariants de
 boucle pour un très petit langage de programmation, décrit
@@ -11,8 +10,7 @@ ci-dessous. Comme échauffement, vous écrirez d'abord un fichier
 SMT-LIB à la main. Il est recommandé de lire en détail la section 16.4
 des notes de cours avant de réaliser ce mini-projet.
 
-Documentation
--------------
+## Documentation
 
 Une attention particulière sera portée sur la documentation de votre
 code : la pertinence et la clarté de cette dernière comptera pour un
@@ -20,7 +18,7 @@ pourcentage important de votre note finale. Vous devrez donc soigner
 les explications qui accompagneront votre code et ce sur deux volets
 principaux :
 
-1. Le fichier RENDU contient des questions précises sur votre
+1. Le fichier `RENDU` contient des questions précises sur votre
    implémentation. Vous devez y répondre en complétant le même
    fichier, qui devra faire partie de votre rendu final. Vos réponses
    doivent être claires, précises et préférablement succinctes. À la
@@ -38,14 +36,14 @@ principaux :
    Un code non commenté entraînera automatiquement une note finale
    lourdement pénalisée.
 
-Consignes
----------
+## Consignes
 
-** Exercice 1 **
+**Exercice 1**
 
 Écrire un fichier SMT-LIB `invariants.smt2` qui, lorsqu'il est donné à
 Z3, trouve un invariant de boucle pour le programme Java suivant :
 
+```java
 int i = 4;
 int v = 0;
 while (i > 0) {
@@ -53,13 +51,14 @@ while (i > 0) {
     i = i - 1;
 }
 assert v == 10;
+```
 
-
-** Exercice 2 **
+**Exercice 2**
 
 Nous définissons un langage de programmation « WA » (While-Assert),
 qui modélise des programmes Java de la forme générale suivante :
 
+```java
 int x1 = a1;
 // (...)
 int xk = ak;
@@ -69,8 +68,9 @@ while (s) {
     xk = bk;
 }
 assert (t);
+```
 
-Plus formellement, un _programme WA_ est défini comme un uplet `(k,
+Plus formellement, un **programme WA** est défini comme un uplet `(k,
 a1, ..., ak, b1, ..., bk, s, t)`, où `k` est un entier représentant le
 nombre de variables utilisées par le programme, `a1`, ..., `ak` sont des
 nombres entiers, `b1`, ..., `bk` sont des _termes_, et `s` et `t` sont
@@ -94,39 +94,36 @@ définition possible des types en OCaml, ainsi qu'une subdivision de
 l'exercice en cinq questions. Vous devez donc compléter le code du
 fichier `invariants.ml` :
 
- - la fonction `str_of_term : term -> string`
- - la fonction `str_of_test : test -> string`
- - la fonction `str_condition : term list -> string`
- - la fonction `str_assert : int -> string -> string`
- - la fonction auxiliaire `loop_condition : program -> string`
- - la fonction auxiliaire `assertion_condition : program -> string`
+- la fonction `str_of_term : term -> string`
+- la fonction `str_of_test : test -> string`
+- la fonction `str_condition : term list -> string`
+- la fonction `str_assert : int -> string -> string`
+- la fonction auxiliaire `loop_condition : program -> string`
+- la fonction auxiliaire `assertion_condition : program -> string`
 
 Les types et les commentaires dans `invariants.ml` sont
 indicatifs. D'autres choix peuvent être pertinents. Vous pouvez
 ajouter d'autres fonctions auxiliaires.
 
-
-Tester son mini-projet
-----------------------
+## Tester son mini-projet
 
 Le fichier `invariants.ml` contient le programme de l'exercice 1 dans
 `p1`. Proposez un autre programme WA `p2` pour tester votre solution
 pour l'exercice 2. Utilisez Z3 pour vérifier que votre code SMT-LIB
-est bien correct (en ligne : https://jfmc.github.io/z3-play/).
+est bien correct [en ligne](https://jfmc.github.io/z3-play/).
 
+## Rendre son mini-projet
 
-Rendre son mini-projet
-----------------------
+- date limite : 15 décembre 2023 à 22:00
+- en binôme, qui est sauf exception le même que pour MP1
+- sous la forme d'une archive `XX-nom1-nom2.zip` où `XX` est le
+  numéro de binôme déclaré à la page [moodle](https://moodle.u-paris.fr/mod/choicegroup/view.php?id=82687) et
+  `nom1` et `nom2` sont les noms de famille des deux membres du
+  binôme, contenant l'arborescence suivante :
 
- - date limite : 15 décembre 2023 à 22:00
- - en binôme, qui est sauf exception le même que pour MP1
- - sous la forme d'une archive `XX-nom1-nom2.zip` où `XX` est le
-   numéro de binôme déclaré à la page
-   https://moodle.u-paris.fr/mod/choicegroup/view.php?id=82687 et
-   `nom1` et `nom2` sont les noms de famille des deux membres du
-   binôme, contenant l'arborescence suivante :
-
-         XX-nom1-nom2/invariants.smt2
-         XX-nom1-nom2/invariants.ml
-         XX-nom1-nom2/Makefile
-         XX-nom1-nom2/RENDU
+```
+XX-nom1-nom2/invariants.smt2
+XX-nom1-nom2/invariants.ml
+XX-nom1-nom2/Makefile
+XX-nom1-nom2/RENDU
+```
