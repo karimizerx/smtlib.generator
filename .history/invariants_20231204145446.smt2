@@ -1,6 +1,0 @@
-(declare-fun Invar (Int Int) Bool)
-(assert (Invar 4 0))
-(assert (forall (( x Int ) ( y Int )) (=> (and (Invar x y) (> x 0)) (Invar (- x 1) (+ x y)))))
-(assert (forall (( x Int ) ( y Int )) (=> (and (Invar x y) (<= x 0)) (= y 10))))
-(check-sat)
-(exit)

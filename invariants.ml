@@ -38,10 +38,10 @@ let rec str_of_term (t : term) : string =
   | Add (t1, t2) -> "(+ " ^ str_of_term t1 ^ " " ^ str_of_term t2 ^ ")"
   | Mult (t1, t2) -> "(* " ^ str_of_term t1 ^ " " ^ str_of_term t2 ^ ")"
 
-let str_of_test t = 
+let str_of_test t =
   match t with
-  | Equals(t1,t2) -> "(= " ^ str_of_term t1 ^ " " ^str_of_term t2 ^")"
-  | GreaterThan(t1,t2) -> "(> " ^ str_of_term t1 ^ " " ^str_of_term t2 ^")"
+  | Equals (t1, t2) -> "(= " ^ str_of_term t1 ^ " " ^ str_of_term t2 ^ ")"
+  | GreaterThan (t1, t2) -> "(> " ^ str_of_term t1 ^ " " ^ str_of_term t2 ^ ")"
 
 let string_repeat s n = Array.fold_left ( ^ ) "" (Array.make n s)
 
@@ -51,8 +51,13 @@ let string_repeat s n = Array.fold_left ( ^ ) "" (Array.make n s)
    l'invariant.  Par exemple, str_condition [Var 1; Const 10] retourne
    "(Invar x1 10)". *)
 
-let str_condition l = "TODO" (* À compléter *)
-
+let str_condition l =
+  let rec aux l str =
+    match l with
+    | [] -> str ^ ")"
+    | t :: otherTerms -> aux otherTerms (str ^ " " ^ str_of_term t)
+  in
+  aux l "(Invar"
 (* Question 3. Écrire une fonction
    `str_assert_for_all : int -> string -> string` qui prend en
    argument un entier n et une chaîne de caractères s, et retourne
@@ -64,13 +69,32 @@ let str_condition l = "TODO" (* À compléter *)
 
 let str_assert s = "(assert " ^ s ^ ")"
 
-let rec aux n = 
-  match n with
-  | 0 -> ""
-  | _ -> aux (n-1) ^ "(" ^ (x n) ^ " Int)"
+(* let rec aux n = match n with 0 -> "" | _ -> aux (n - 1) ^ "(" ^ x n ^ " Int)"
+   let str_assert_forall n s = str_assert "(forall (" ^ aux n ^ ") (" ^ s ^ ")))" *)
 
-let str_assert_forall n s = 
-  str_assert "(forall ("^ aux n ^ ") (" ^ s ^ ")))" 
+let str_assert_forall n s =
+  (* [one int] retourne une chaîne de caractères qui exprime que l'écriture d'un *)
+  let one i = "(" ^ x i ^ " Int)" in 
+  let r n =
+    let rec aux n i str =
+      if i = n then str ^ one i else aux n (i + 1) (str ^ one i ^ " ")
+    in
+    aux n 1 ""
+  in
+  let b n s = "(" ^ r n ^ ")" ^ " (" ^ s ^ ")" in
+  let a n s = "(forall " ^ b n s ^ ")" in
+  str_assert (a n s)
+
+(*
+   (assert a)
+   a :
+     (forall b)
+   b :
+     (r) (s)
+     (x1 Int) (x1 Int)
+   s : = s
+     > x1 x2
+*)
 
 (* Question 4. Nous donnons ci-dessous une définition possible de la
    fonction smt_lib_of_wa. Complétez-la en écrivant les définitions de
@@ -86,14 +110,15 @@ let smtlib_of_wa p =
   in
   let loop_condition =
     "; la relation Invar est un invariant de boucle\n"
-    ^ "TODO" (* À compléter *)
+    ^ str_assert_forall p.nvars (str_of_test p.loopcond)
   in
   let initial_condition =
     "; la relation Invar est vraie initialement\n"
     ^ str_assert (str_condition (List.map (function i -> Const i) p.inits))
   in
   let assertion_condition =
-    "; l'assertion finale est vérifiée\n" ^ "TODO" (* À compléter *)
+    "; l'assertion finale est vérifiée\n"
+    ^ str_assert_forall p.nvars (str_of_test p.assertion)
   in
   let call_solver =
     "; appel au solveur\n(check-sat-using (then qe smt))\n(get-model)\n(exit)\n"
@@ -126,5 +151,6 @@ let () = Printf.printf "%s" (smtlib_of_wa p1)
    test avec **trois** variables et vérifiez qu'il donne un fichier
    SMT-LIB la forme attendue. *)
 
-let p2 = None (* À compléter *)
-let () = Printf.printf "%s" (smtlib_of_wa p2)
+let p2 = None
+(* À compléter *)
+(* let () = Printf.printf "%s" (smtlib_of_wa p2) *)
