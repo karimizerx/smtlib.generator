@@ -63,7 +63,14 @@ let str_condition l = "TODO" (* À compléter *)
    (forall ((x1 Int) (x2 Int)) (> x1 x2)))". *)
 
 let str_assert s = "(assert " ^ s ^ ")"
-let str_assert_forall n s = "TODO" (* À compléter *)
+
+let rec aux n = 
+  match n with
+  | 0 -> ""
+  | _ -> str_assert_forall (n-1) s ^ "(" ^ (x n) ^ " Int)"
+
+let str_assert_forall n s = 
+  str_assert "(forall ("^ aux n ^ ") (" ^ s ^ ")))" 
 
 (* Question 4. Nous donnons ci-dessous une définition possible de la
    fonction smt_lib_of_wa. Complétez-la en écrivant les définitions de
