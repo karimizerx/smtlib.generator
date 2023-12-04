@@ -67,7 +67,7 @@ let str_assert s = "(assert " ^ s ^ ")"
 let rec aux n = 
   match n with
   | 0 -> ""
-  | _ -> str_assert_forall (n-1) s ^ "(" ^ (x n) ^ " Int)"
+  | _ -> aux (n-1) ^ "(" ^ (x n) ^ " Int)"
 
 let str_assert_forall n s = 
   str_assert "(forall ("^ aux n ^ ") (" ^ s ^ ")))" 
