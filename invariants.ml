@@ -31,7 +31,13 @@ let x n = "x" ^ string_of_int n
    (Var 1, Const 3)) retourne "(+ x1 3)" et str_of_test (Equals (Var
    2, Const 2)) retourne "(= x2 2)". *)
 
-let rec str_of_term t = "TODO" (* À compléter *)
+let rec str_of_term (t : term) : string =
+  match t with
+  | Const i -> string_of_int i
+  | Var i -> x i
+  | Add (t1, t2) -> "(+ " ^ str_of_term t1 ^ " " ^ str_of_term t2 ^ ")"
+  | Mult (t1, t2) -> "(* " ^ str_of_term t1 ^ " " ^ str_of_term t2 ^ ")"
+
 let str_of_test t = "TODO" (* À compléter *)
 let string_repeat s n = Array.fold_left ( ^ ) "" (Array.make n s)
 
