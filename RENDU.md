@@ -47,7 +47,9 @@ Nom, prénom 2: **KHEMAKHEM Ayman**
    quantité strictement décroissante au cours des appels successifs
    vous assure la terminaison ?
 
-**à remplir** :warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning:
+- Le type de fonction OCaml qui nous vient immédiatement à l'esprit est la **fonction récursive** utilisant le **pattern matching**.
+- Les cas de bases sont donc les cas où `term` est une variable (`Var`) ou bien une constante (`Const`).
+- Pour la récursion, on ne peut appeler `Add` et `Mult` avec autre chose que des terms, donc forcément avec des éléments qui sont soit Add ou Mult, soit un cas de base (Var ou Const). Donc les appels récursifs tendent naturellement vers les cas de bases, assurant la terminaison.
 
 ---
 
@@ -60,17 +62,21 @@ Nom, prénom 2: **KHEMAKHEM Ayman**
    comment ces fonctions auxiliaires sont utilisées dans votre
    implémentation de la fonction `str_condition`.
 
-Nous avons utilisé une fonction `aux_str_condition` qui ajoute chaque term de la liste `list_of_terms` à la string `str`. `str` indique que les terms de la liste sont dans l'invariant.
+Nous avons utilisé une fonction `aux_str_condition` qui ajoute chaque terme de la liste `list_of_terms` à la string `str`. `str` indique que les termes de la liste sont dans l'invariant.
 
 ---
 
 3. Pour l'implémentation de `str_assert_forall`, quelles sont les
    fonctions auxiliaires que vous avez utilisées et/ou écrites ?
    Expliquez en quelques phrases en français comment ces fonctions
-   auxiliaires sont utilisées dans votre implémentation de la fonction
-   `str_assert_forall`.
+   auxiliaires sont utilisées dans votre implémentation de la fonction `str_assert_forall`.
 
-**à remplir**
+Nous utilisons deux fonctions auxiliaires:
+
+- `str_assert` qui est fournie, est permet d'écrire assert autour d'une string.
+- `aux_forall` qui permet d'itérer sur le nombre de variables à écrire.
+  Dans l'expression SMT-LIB `forall ((x1 Int) (x2 Int) ... (xk Int)) (s))`, cette fonction ajoute à la string renvoyée par `str_assert_forall` toute la partie `(x1 Int) (x2 Int) ... (xk Int)`.
+  Elle s'arrête lorsqu'on atteint la **variable 1**. On part du principe que les arguments sont toujours bons, i.e `n >= 1`.
 
 ---
 
@@ -87,14 +93,8 @@ Nous avons utilisé une fonction `aux_str_condition` qui ajoute chaque term de l
    construire un programme SMT-LIB plus proche de la façon dont les
    variables sont mises à jour en Java.
 
-**à remplir**
+:warning::warning::warning::warning::warning::warning::warning::warning::warning::warning:
 
 ---
 
 5. Avez-vous d'autres remarques sur votre rendu ? (question optionnelle)
-
-**à remplir**
-
-```
-
-```

@@ -76,12 +76,12 @@ let str_assert s = "(assert " ^ s ^ ")"
 
 let str_assert_forall n s =
   (* pattern matching sur le nombre de variables à écrire *)
-  let rec aux n =
+  let rec aux_forall n =
     match n with
     | 1 -> "(" ^ x n ^ " Int)"
-    | _ -> aux (n - 1) ^ " (" ^ x n ^ " Int)"
+    | _ -> aux_forall (n - 1) ^ " (" ^ x n ^ " Int)"
   in
-  str_assert ("(forall (" ^ aux n ^ ") (" ^ s ^ "))")
+  str_assert ("(forall (" ^ aux_forall n ^ ") (" ^ s ^ "))")
 
 (* Question 4. Nous donnons ci-dessous une définition possible de la
    fonction smt_lib_of_wa. Complétez-la en écrivant les définitions de
