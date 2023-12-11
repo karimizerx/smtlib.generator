@@ -53,14 +53,15 @@ let string_repeat s n = Array.fold_left ( ^ ) "" (Array.make n s)
    l'invariant.  Par exemple, str_condition [Var 1; Const 10] retourne
    "(Invar x1 10)". *)
 
-let str_condition listOfTerms =
+let str_condition list_of_terms =
   (* pattern matching sur les éléments de la liste, i.e tous les termes *)
-  let rec aux l str =
+  let rec aux_str_condition l str =
     match l with
     | [] -> str ^ ")"
-    | t :: otherTerms -> aux otherTerms (str ^ " " ^ str_of_term t)
+    | t :: other_terms ->
+        aux_str_condition other_terms (str ^ " " ^ str_of_term t)
   in
-  aux listOfTerms "(Invar"
+  aux_str_condition list_of_terms "(Invar"
 
 (* Question 3. Écrire une fonction
    `str_assert_for_all : int -> string -> string` qui prend en
@@ -146,7 +147,7 @@ let p1 =
    SMT-LIB qui est équivalent au fichier que vous avez écrit à la main
    dans l'exercice 1. *)
 
-let () = Printf.printf "%s" (smtlib_of_wa p1)
+(* let () = Printf.printf "%s" (smtlib_of_wa p1) *)
 
 (* Ajoutez dans la variable p2 ci-dessous au moins un autre programme
    test avec **trois** variables et vérifiez qu'il donne un fichier
@@ -155,14 +156,11 @@ let () = Printf.printf "%s" (smtlib_of_wa p1)
 let p2 =
   {
     nvars = 3;
-    inits = [ 0; 0; 0 ];
-    mods =
-      [
-        Add (Var 1, Const 1); Add (Var 2, Var 1); Add (Var 3, Add (Var 2, Var 1));
-      ];
-    loopcond = GreaterThan (Const 10, Var 1);
-    assertion = Equals (Var 3, Const 10);
+    inits = [ 0; 0; 10 ];
+    mods = [ Add (Var 1, Const 1); Add (Var 1, Var 3); Add (Var 3, Const (-1)) ];
+    loopcond = GreaterThan (Var 3, Const 0);
+    assertion = Equals (Var 2, Const 10);
   }
 
 (* À compléter *)
-(* let () = Printf.printf "%s" (smtlib_of_wa p2) *)
+let () = Printf.printf "%s" (smtlib_of_wa p2)

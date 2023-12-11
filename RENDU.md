@@ -20,7 +20,8 @@ Nom, prénom 2: **KHEMAKHEM Ayman**
 
 - La commande `make invariants` s'exécute sans erreurs ni warnings.
 - La sortie produite par `./invariants` est bien au format SMT-LIB. Une seul chose diffère, lorsque l'on vérifie que l'_assertion finale est vérifiée_. En effet, lorsque nous vérifions que nous sommes bien en dehors de la boucle while, nous avons préféré utiliser un **not**. Toutefois, ce format est bien pris en charge par z3.
-  **:arrow_right: Sortie produit par la commande `./invariants` :**
+
+**:arrow_right: Sortie produit par la commande `./invariants` :**
 
 ```
 ; synthèse d'invariant de programme
@@ -46,7 +47,7 @@ Nom, prénom 2: **KHEMAKHEM Ayman**
    quantité strictement décroissante au cours des appels successifs
    vous assure la terminaison ?
 
-**à remplir**
+**à remplir** :warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning::warning:
 
 ---
 
@@ -59,7 +60,7 @@ Nom, prénom 2: **KHEMAKHEM Ayman**
    comment ces fonctions auxiliaires sont utilisées dans votre
    implémentation de la fonction `str_condition`.
 
-**à remplir**
+Nous avons utilisé une fonction `aux_str_condition` qui ajoute chaque term de la liste `list_of_terms` à la string `str`. `str` indique que les terms de la liste sont dans l'invariant.
 
 ---
 
@@ -93,3 +94,7 @@ Nom, prénom 2: **KHEMAKHEM Ayman**
 5. Avez-vous d'autres remarques sur votre rendu ? (question optionnelle)
 
 **à remplir**
+
+```
+
+```

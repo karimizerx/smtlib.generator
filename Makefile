@@ -5,8 +5,8 @@ test: invariants
 	- z3 invariants.smt2
 	./invariants > test.smt2
 	- z3 test.smt2
-	emacs invariants.ml&
-	cat RENDU
+	# emacs invariants.ml&
+	cat RENDU.md
 
 clean:
 	rm -f *~ *.cmi *.cmx *.o invariants
