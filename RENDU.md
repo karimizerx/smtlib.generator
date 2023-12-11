@@ -93,7 +93,15 @@ Nous utilisons deux fonctions auxiliaires:
    construire un programme SMT-LIB plus proche de la façon dont les
    variables sont mises à jour en Java.
 
-:warning::warning::warning::warning::warning::warning::warning::warning::warning::warning:
+L'idée serait d'appeler plusieurs fois les assert, afin de faire les changement en différé. Pour l'exemple, cela donnerait :
+
+```
+;la relation Invar est un invariant de boucle
+(assert (forall ((x1 Int) (x2 Int)) (=> (and (Invar x1 x2) (>= x1 x2)) (Invar (+ x1 x2) (+ x2 0)) ) ) )
+(assert (forall ((x1 Int) (x2 Int)) (=> (and (Invar x1 x2) (>= x1 x2)) (Invar (+ x1 0) (+ x2 x1)) ) ) )
+;la relation Invar doit être sûr
+(assert (forall ((x1 Int) (x2 Int)) (=> (and (Invar x1 x2) (< x1 x2))  (= x2 (x1 + 1))) ) )
+```
 
 ---
 
