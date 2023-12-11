@@ -96,6 +96,7 @@ let smtlib_of_wa p =
   in
   let loop_condition =
     let condition_invariant_variable =
+      (* On crée ici une liste de termes x1,x2,...,xk. Puis on exprime le fait que tuple formé par cette liste est dans l'invariant. *)
       str_condition (List.init p.nvars (function i -> Var (i + 1)))
     in
     let condition_loop = str_of_test p.loopcond in
@@ -151,6 +152,17 @@ let () = Printf.printf "%s" (smtlib_of_wa p1)
    test avec **trois** variables et vérifiez qu'il donne un fichier
    SMT-LIB la forme attendue. *)
 
-let p2 = None
+let p2 =
+  {
+    nvars = 3;
+    inits = [ 0; 0; 0 ];
+    mods =
+      [
+        Add (Var 1, Const 1); Add (Var 2, Var 1); Add (Var 3, Add (Var 2, Var 1));
+      ];
+    loopcond = GreaterThan (Const 10, Var 1);
+    assertion = Equals (Var 3, Const 10);
+  }
+
 (* À compléter *)
 (* let () = Printf.printf "%s" (smtlib_of_wa p2) *)

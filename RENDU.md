@@ -1,28 +1,43 @@
-           Mini-projet 2 : Synthèse d'invariant en SMT-LIB
-                            fichier RENDU
-                     (à remplir obligatoirement)
+# Mini-projet 2 : Synthèse d'invariant en SMT-LIB
 
 **Un mini-projet sans fichier RENDU rempli ne recevra pas de note.**
 
 Date limite: 15 décembre 2023 à 22:00
 
-Identité
---------
-Nombre de binôme: **à remplir**
-Nom, prénom 1: **à remplir**
-Nom, prénom 2: **à remplir**
+## Identité
 
+Nombre de binôme: **10**
+Nom, prénom 1: **LAÏDOUNI Mohamed**
+Nom, prénom 2: **KHEMAKHEM Ayman**
 
-Questions sur votre code
-------------------------
+## Questions sur votre code
 
-** Exercice 2 **
+**Exercice 2**
 
 0. Avez-vous testé que `make invariants` s'exécute sans erreurs ou
    warnings, puis que `./invariants` produit une sortie au format
    SMT-LIB, et enfin que cette sortie est acceptée par Z3 ?
 
-**à remplir**
+- La commande `make invariants` s'exécute sans erreurs ni warnings.
+- La sortie produite par `./invariants` est bien au format SMT-LIB. Une seul chose diffère, lorsque l'on vérifie que l'_assertion finale est vérifiée_. En effet, lorsque nous vérifions que nous sommes bien en dehors de la boucle while, nous avons préféré utiliser un **not**. Toutefois, ce format est bien pris en charge par z3.
+  **:arrow_right: Sortie produit par la commande `./invariants` :**
+
+```
+; synthèse d'invariant de programme
+; on déclare le symbole non interprété de relation Invar
+(declare-fun Invar (Int Int ) Bool)
+; la relation Invar est un invariant de boucle
+(assert (forall ((x1 Int) (x2 Int)) (=> (and (Invar x1 x2) (> x1 0)) (Invar (+ x1 -1) (+ x2 x1)))))
+; la relation Invar est vraie initialement
+(assert (Invar 4 0))
+; l'assertion finale est vérifiée
+(assert (forall ((x1 Int) (x2 Int)) (=> (and (Invar x1 x2) (not (> x1 0))) (= x2 10))))
+; appel au solveur
+(check-sat-using (then qe smt))
+(get-model)
+(exit)
+
+```
 
 ---
 
